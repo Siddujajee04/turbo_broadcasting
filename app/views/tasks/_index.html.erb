@@ -1,0 +1,6 @@
+<%= turbo_stream_from "tasks" %>
+<div id="<%= status %>" class="grid grid-cols-12">
+    <% tasks.each do |task| %>
+        <%= render "task", task: task %>
+    <% end %>
+</div>

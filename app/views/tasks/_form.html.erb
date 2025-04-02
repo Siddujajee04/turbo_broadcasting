@@ -1,0 +1,22 @@
+<%= form_with(model: task, class: "contents", data: {controller: "task", action: "submit->task#validate"}) do |form| %>  
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, data: {task_target: "titleField"}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": task.errors[:title].none?, "border-red-400 focus:outline-red-600": task.errors[:title].any?}] %>
+    <span class="text-red-500 text-sm hidden" data-task-target="titleErrorMessage">title cannot be empty</span>
+  </div>
+  
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.text_field :description, data: {task_target: "descriptionField"}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": task.errors[:description].none?, "border-red-400 focus:outline-red-600": task.errors[:description].any?}] %>
+    <span class="text-red-500 text-sm hidden" data-task-target="descriptionErrorMessage">description cannot be empty</span>
+  </div>
+  <% unless params[:action] == "edit" %>
+    <div class="my-5">
+      <%= form.label :status %>
+          <%= form.select :status, [["To Do", "to_do"], ["In Progress", "in_progress"], ["Completed", "completed"]], {}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": task.errors[:status].none?, "border-red-400 focus:outline-red-600": task.errors[:status].any?}] %>
+    </div>
+  <% end %>
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

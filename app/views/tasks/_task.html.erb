@@ -1,0 +1,32 @@
+<%= turbo_frame_tag dom_id(task), class: "col-span-8" do %>
+  <div id="<%= dom_id task %>" class="w-full sm:w-auto my-5 border border-gray-200 shadow-md p-[10px]">
+    <% next_status = case task.status
+      when "to_do" then "in_progress"
+      when "in_progress" then "completed"
+      when "completed" then "to_do"
+    end %>
+    <% next_status_class = case task.status
+      when "to_do" then "bg-blue-500 text-white text-[12px] rounded-[10px] px-[6px] float-right"
+      when "in_progress" then "bg-green-500 text-white text-[12px] rounded-[10px] px-[6px] float-right"
+      when "completed" then "bg-red-400 text-white text-[12px] rounded-[10px] px-[6px] float-right"
+    end %>
+    
+    <%= button_to "Move to #{next_status.titleize}", status_path(task.id, status: next_status), method: :patch, class: next_status_class %>
+
+    <div>
+      <span class="block font-medium mb-1">Title: <%= task.title %></span>
+    </div>
+    <div>
+      <span class="block font-medium mb-1">Description: <%= task.description %></span>
+    </div>
+    <div>
+      <span class="block font-medium mb-1">Status: <%= task.status.try(:titleize) %></span>
+    </div>
+    <div class="w-full sm:w-auto">
+      <%= link_to "Edit", edit_task_path(task), class: "w-full sm:w-auto text-center rounded-md p-[5px] bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+      <div class="sm:inline-block">
+        <%= button_to "Destroy", task, method: :delete, class: "w-full sm:w-auto rounded-md p-[5px] text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+      </div>
+    </div>
+  </div>
+<% end %>

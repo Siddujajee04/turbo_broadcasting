@@ -1,0 +1,2 @@
+<%= turbo_stream.remove dom_id(@task) %>
+<%= turbo_stream.append "#{@task.status}_tasks", partial: "tasks/task", locals: { task: @task } %>
