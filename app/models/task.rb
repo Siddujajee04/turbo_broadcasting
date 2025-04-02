@@ -23,10 +23,10 @@ class Task
       html: Task.where(status: self.status).count.to_s
     )
 
-    Turbo::StreamsChannel.broadcast_replace_to("tasks_count",
-      target: "notification",
-      partial: "tasks/notification", locals: {content: "Task was successfully created."}
-    )
+    # Turbo::StreamsChannel.broadcast_replace_to("tasks_count",
+    #   target: "notification",
+    #   partial: "tasks/notification", locals: {content: "Task was successfully created."}
+    # )
   end
   def broadcast_updation()
     Turbo::StreamsChannel.broadcast_replace_to "tasks",
