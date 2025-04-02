@@ -35,7 +35,7 @@ class Task
       locals: { task: self }
   end
   def broadcast_deletion()
-    Turbo::StreamsChannel.broadcast_replace_to "tasks",
+    Turbo::StreamsChannel.broadcast_remove_to "tasks",
       target: "task_#{self.id.to_s}"
 
     Turbo::StreamsChannel.broadcast_replace_to "tasks_count",
