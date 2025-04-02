@@ -75,4 +75,4 @@ gem 'faker', '3.3.1'
 
 
 
-gem "tailwindcss-rails", "~> 2.7"
+gem "tailwindcss-rails", "~> 4.2"
