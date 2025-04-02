@@ -1,1 +1,2 @@
 <%= turbo_stream.remove dom_id(@task) %>
+<%= turbo_stream.replace "#{@task.status}_count", @tasks_count %>

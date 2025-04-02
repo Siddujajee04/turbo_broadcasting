@@ -1,1 +1,1 @@
-<%= turbo_stream.append "#{@task.status}_tasks", partial: "tasks/task", locals: { task: @task } %>
+<%= turbo_stream.replace "notification", partial: "tasks/notification", locals: {content: @message} %>

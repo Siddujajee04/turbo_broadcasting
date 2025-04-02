@@ -1,30 +1,47 @@
 <div class="grid grid-cols-12 col-span-12" data-controller="task">
   <div class="flex col-span-12 justify-between items-center">
-    <h1 class="font-bold text-4xl underline">Tasks</h1>
+  <% progress_bar = (@completed_tasks.count.to_f / @tasks.count) * 100 %>
+    <h1 class="font-bold text-4xl underline">Tasks</h1><%= progress_bar.round(2) %>
     <%= link_to "#", class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium", data:{action: "click->task#toggleForm"} do %>New Task<% end %>
     </div>
     <div data-task-target="taskForm" class="hidden col-span-6">
       <%= render partial: "form", locals: {task: Task.new} %>
     </div>
-
+    
+    <div id="notification">
+      
+    </div>
+  <%= turbo_stream_from "tasks_count" %>
   <div id="tasks" class="grid grid-cols-12 col-span-12">
     <% if @tasks.any? %>
       <div class="toDoTasks col-span-4">
-        <h3 class="text-[30px] font-bold text-red-400">To Do</h3>
+        <h3 class="text-[30px] font-bold text-red-400">To Do -
+          <span id="to_do_tasks_count">
+            <%= @to_do_tasks.count %>
+          </span>
+        </h3>
         <div class="pb-5 sm:pb-0">
           <%= render partial: "index", locals: {tasks: @to_do_tasks, status: "to_do_tasks"} %>
         </div>
       </div>
 
       <div class="inprogressTasks col-span-4">
-        <h3 class="text-[30px] font-bold text-blue-400">Inprogress</h3>
+        <h3 class="text-[30px] font-bold text-blue-400">Inprogress -
+          <span id="in_progress_tasks_count">
+            <%= @in_progress_tasks.count %>
+          </span>
+        </h3>
         <div class="pb-5 sm:pb-0">
           <%= render partial: "index", locals: {tasks: @in_progress_tasks, status: "in_progress_tasks"} %>
         </div>
       </div>
 
       <div class="completedTasks col-span-4">
-        <h3 class="text-[30px] font-bold text-green-500">Completed</h3>
+        <h3 class="text-[30px] font-bold text-green-500">Completed -
+          <span id="completed_tasks_count">
+            <%= @completed_tasks.count %>
+          </span>
+        </h3>
         <div class="pb-5 sm:pb-0">
           <%= render partial: "index", locals: {tasks: @completed_tasks, status: "completed_tasks"} %>
         </div>

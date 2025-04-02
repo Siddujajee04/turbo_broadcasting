@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ edit update destroy ]
+  before_action :tasks_count, only: %i[ index update destroy]
 
   # GET /tasks or /tasks.json
   def index
@@ -25,7 +26,7 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @message = "Task was successfully created."
     respond_to do |format|
       if @task.save
         format.turbo_stream
@@ -60,5 +61,9 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :description, :status)
+    end
+
+    def tasks_count
+      @tasks_count = Task.all.count
     end
 end
